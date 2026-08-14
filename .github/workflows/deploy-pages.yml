@@ -1,0 +1,42 @@
+name: Deploy Humanity Open Problems Demo
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/deploy-pages.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact public demo bundle
+        run: |
+          mkdir -p site
+          curl -L --fail --retry 3 'https://sdmntprkoreacentral.oaiusercontent.com/files/00000000-ece0-8206-b627-6b3cdb30d692/raw?se=2026-08-14T08%3A05%3A02Z&sp=r&sv=2026-02-06&sr=b&scid=8328b099-1fcf-57f1-a4b1-deb3a0a6c509&skoid=03727f49-62d3-42ac-8350-1c0e6559d238&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-14T01%3A12%3A10Z&ske=2026-08-15T01%3A12%3A10Z&sks=b&skv=2026-02-06&sig=rjpKBgDBulym2HY/TkJGRCHqTiV7F6xPlJiCmziJcRY%3D' -o /tmp/demo.zip
+          unzip -q /tmp/demo.zip -d site
+          test -f site/index.html
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
