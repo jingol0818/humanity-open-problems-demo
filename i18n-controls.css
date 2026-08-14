@@ -1,0 +1,26 @@
+html[lang="ko"] body,
+html[lang="ko"] button,
+html[lang="ko"] input {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", system-ui, sans-serif;
+}
+
+.drawer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-actions .language-toggle {
+  padding: 8px 6px;
+  white-space: nowrap;
+}
+
+.mobile-language {
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .drawer-actions .language-toggle {
+    display: inline-flex;
+  }
+}
