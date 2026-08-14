@@ -2,6 +2,7 @@
   const { problemById, eventsForProblem, followed } = window.HOP_STATE;
   const i18n = window.HOP_I18N;
   const t = (key) => i18n.t(key);
+  const copy = (en, ko) => i18n.getLocale() === "ko" ? ko : en;
 
   function followButton(problem, compact = false) {
     const active = followed.has(problem.id);
@@ -58,6 +59,7 @@
           ${showProblem ? `<p class="eyebrow" style="margin-top:14px">${problem.shortTitle}</p>` : ""}
           <h3>${item.title}</h3>
           <p>${item.summary}</p>
+          <p class="event-source"><span>${copy("Source type", "출처 유형")}</span>${item.source || copy("Source pending", "출처 준비 중")}</p>
           <div class="event-foot">
             <span>${item.date}</span>
             <span>${t("openEvent")}</span>
