@@ -24,7 +24,7 @@ jobs:
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Capture live desktop and mobile
         run: |
-          cat > /tmp/review.mjs <<'EOF'
+          cat > review.mjs <<'EOF'
           import { chromium } from 'playwright';
           import fs from 'fs';
           const url = 'https://jingol0818.github.io/humanity-open-problems-demo/';
@@ -43,7 +43,7 @@ jobs:
           await mobile.screenshot({path:'live-home-mobile.png',fullPage:true});
           await browser.close();
           EOF
-          node /tmp/review.mjs
+          node review.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: live-ux-review
