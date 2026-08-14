@@ -1,4 +1,4 @@
-name: Deploy Humanity Open Problems Demo
+name: Sync Humanity Open Problems Demo
 
 on:
   workflow_dispatch:
@@ -7,36 +7,35 @@ on:
       - '.github/workflows/deploy-pages.yml'
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Download exact public demo bundle
         run: |
-          mkdir -p site
-          curl -L --fail --retry 3 'https://sdmntprjapaneast.oaiusercontent.com/files/00000000-1d34-8209-94d1-906333e968b8/raw?se=2026-08-14T08%3A10%3A17Z&sp=r&sv=2026-02-06&sr=b&scid=2f3044b1-daa6-5908-86b5-8254eac70bcd&skoid=03727f49-62d3-42ac-8350-1c0e6559d238&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-14T06%3A36%3A52Z&ske=2026-08-15T06%3A36%3A52Z&sks=b&skv=2026-02-06&sig=sXk5JbM4RFZYRYrBp21NQzph6AJRo29tbaVERJOtdb8%3D' -o /tmp/demo.zip
-          unzip -q /tmp/demo.zip -d site
-          test -f site/index.html
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          rm -rf /tmp/hop-demo
+          mkdir -p /tmp/hop-demo
+          curl -L --fail --retry 3 'https://sdmntprjapaneast.oaiusercontent.com/files/00000000-511c-8209-8304-a9587157aa75/raw?se=2026-08-14T08%3A11%3A48Z&sp=r&sv=2026-02-06&sr=b&scid=f467254d-d39b-5d3b-8ae7-3022e2d65e5a&skoid=03727f49-62d3-42ac-8350-1c0e6559d238&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-14T00%3A06%3A07Z&ske=2026-08-15T00%3A06%3A07Z&sks=b&skv=2026-02-06&sig=zRaMLP%2BedTh5b92Te/FGtci7S0cOD7RLjXI8RJL0UkE%3D' -o /tmp/demo.zip
+          unzip -q /tmp/demo.zip -d /tmp/hop-demo
+          test -f /tmp/hop-demo/index.html
+      - name: Copy runtime files into repository root
+        run: |
+          cp -a /tmp/hop-demo/. ./
+          rm -f browser-smoke.mjs mobile-smoke.mjs check-data.mjs run.bat run.sh README.md 2>/dev/null || true
+          test -f index.html
+          test -f data.js
+          test -f i18n-ko-data.js
+      - name: Commit synchronized demo
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html styles.css design-v2.css i18n-controls.css data.js i18n-ko-data.js i18n.js i18n-polish.js state.js components.js views-home.js views-detail.js ui.js app.js robots.txt .nojekyll
+          if git diff --cached --quiet; then
+            echo 'No demo changes to commit.'
+          else
+            git commit -m 'Publish synchronized demo runtime'
+            git push origin main
+          fi
