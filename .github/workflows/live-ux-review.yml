@@ -1,0 +1,54 @@
+name: Live UX Review
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/live-ux-review.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@latest >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Capture live desktop and mobile
+        run: |
+          cat > /tmp/review.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'fs';
+          const url = 'https://jingol0818.github.io/humanity-open-problems-demo/';
+          const browser = await chromium.launch({headless:true});
+          const desktop = await browser.newPage({viewport:{width:1440,height:1000}});
+          const errors=[];
+          desktop.on('pageerror', e => errors.push(String(e)));
+          await desktop.goto(url,{waitUntil:'networkidle'});
+          await desktop.screenshot({path:'live-home-desktop.png',fullPage:true});
+          const title = await desktop.title();
+          const h1 = await desktop.locator('h1').first().textContent().catch(()=>null);
+          const bodyText = await desktop.locator('body').innerText();
+          fs.writeFileSync('live-review.txt', `TITLE: ${title}\nH1: ${h1}\nERRORS: ${errors.join(' | ') || 'none'}\n\nBODY:\n${bodyText}`);
+          const mobile = await browser.newPage({viewport:{width:390,height:844},isMobile:true});
+          await mobile.goto(url,{waitUntil:'networkidle'});
+          await mobile.screenshot({path:'live-home-mobile.png',fullPage:true});
+          await browser.close();
+          EOF
+          node /tmp/review.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: live-ux-review
+          path: |
+            live-home-desktop.png
+            live-home-mobile.png
+            live-review.txt
+          retention-days: 1
