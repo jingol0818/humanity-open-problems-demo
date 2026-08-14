@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Humanity Open Problems — follow the frontier of what humanity still doesn't know." />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <title>Humanity Open Problems — Prototype</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./design-v2.css" />
+  <link rel="stylesheet" href="./i18n-controls.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="#/" aria-label="Humanity Open Problems home">
+        <span class="brand-mark">?</span>
+        <span class="brand-copy">
+          <strong>Humanity Open Problems</strong>
+          <small data-i18n="prototype">Prototype</small>
+        </span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a data-nav="discover" href="#/" data-i18n="discover">Discover</a>
+        <a data-nav="following" href="#/following"><span data-i18n="myFrontiers">My Frontiers</span> <span id="follow-count" class="count-pill">0</span></a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="language-toggle" class="language-toggle" type="button" aria-label="한국어로 전환">한국어</button>
+        <button id="search-button" class="icon-button" type="button" data-i18n-aria="searchAria" aria-label="Search problems">⌕</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a data-nav="discover" href="#/" data-i18n="discover">Discover</a>
+    <a data-nav="following" href="#/following"><span data-i18n="myFrontiers">My Frontiers</span> <span id="mobile-follow-count" class="count-pill">0</span></a>
+    <button class="mobile-language" type="button" data-language-toggle>한국어</button>
+  </nav>
+
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+  <aside id="explain-drawer" class="drawer" aria-hidden="true" aria-label="AI explain drawer">
+    <div class="drawer-header">
+      <div>
+        <p class="eyebrow" data-i18n="aiExplain">AI EXPLAIN</p>
+        <h2 id="drawer-title" data-i18n="explainThis">Explain this</h2>
+      </div>
+      <div class="drawer-actions">
+        <button class="language-toggle" type="button" data-language-toggle>한국어</button>
+        <button id="drawer-close" class="icon-button" type="button" data-i18n-aria="closeExplanation" aria-label="Close explanation">×</button>
+      </div>
+    </div>
+    <div id="drawer-body" class="drawer-body"></div>
+  </aside>
+
+  <dialog id="search-dialog" class="search-dialog">
+    <form method="dialog" class="search-head">
+      <div>
+        <p class="eyebrow" data-i18n="exploreUnknown">EXPLORE THE UNKNOWN</p>
+        <h2 data-i18n="findProblem">Find a problem</h2>
+      </div>
+      <button class="icon-button" value="cancel" data-i18n-aria="closeSearch" aria-label="Close search">×</button>
+    </form>
+    <input id="search-input" class="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Try “dark matter”, “life”, “mathematics”…" autocomplete="off" />
+    <div id="search-results" class="search-results"></div>
+  </dialog>
+
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+  <script src="./data.js"></script>
+  <script src="./i18n-ko-data.js"></script>
+  <script src="./i18n.js"></script>
+  <script src="./i18n-polish.js"></script>
+  <script src="./state.js"></script>
+  <script src="./components.js"></script>
+  <script src="./views-home.js"></script>
+  <script src="./views-detail.js"></script>
+  <script src="./ui.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
