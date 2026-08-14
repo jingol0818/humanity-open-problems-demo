@@ -26,7 +26,7 @@ jobs:
       - name: Download exact public demo bundle
         run: |
           mkdir -p site
-          curl -L --fail --retry 3 'https://sdmntprkoreacentral.oaiusercontent.com/files/00000000-ece0-8206-b627-6b3cdb30d692/raw?se=2026-08-14T08%3A05%3A02Z&sp=r&sv=2026-02-06&sr=b&scid=8328b099-1fcf-57f1-a4b1-deb3a0a6c509&skoid=03727f49-62d3-42ac-8350-1c0e6559d238&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-14T01%3A12%3A10Z&ske=2026-08-15T01%3A12%3A10Z&sks=b&skv=2026-02-06&sig=rjpKBgDBulym2HY/TkJGRCHqTiV7F6xPlJiCmziJcRY%3D' -o /tmp/demo.zip
+          curl -L --fail --retry 3 'https://sdmntprjapaneast.oaiusercontent.com/files/00000000-1d34-8209-94d1-906333e968b8/raw?se=2026-08-14T08%3A10%3A17Z&sp=r&sv=2026-02-06&sr=b&scid=2f3044b1-daa6-5908-86b5-8254eac70bcd&skoid=03727f49-62d3-42ac-8350-1c0e6559d238&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-14T06%3A36%3A52Z&ske=2026-08-15T06%3A36%3A52Z&sks=b&skv=2026-02-06&sig=sXk5JbM4RFZYRYrBp21NQzph6AJRo29tbaVERJOtdb8%3D' -o /tmp/demo.zip
           unzip -q /tmp/demo.zip -d site
           test -f site/index.html
       - name: Configure Pages
