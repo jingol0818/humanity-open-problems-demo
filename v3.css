@@ -1,0 +1,138 @@
+.prototype-disclosure {
+  width: fit-content;
+  margin: 18px 0 0;
+  padding: 7px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255,255,255,.5);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+.v3-hero-side {
+  gap: 12px;
+}
+
+.how-card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+}
+
+.how-steps {
+  display: grid;
+  gap: 0;
+  margin-top: 4px;
+}
+
+.how-step {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+}
+
+.how-step:first-child {
+  border-top: 0;
+}
+
+.how-step > span {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.how-step strong {
+  display: block;
+  font-size: 15px;
+  letter-spacing: -.015em;
+}
+
+.how-step p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.hero-progress-card {
+  min-height: auto;
+}
+
+.hero-progress-meta {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.hero-progress-meta > span {
+  max-width: 64%;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.event-source {
+  display: grid;
+  gap: 2px;
+  margin-top: 18px !important;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted) !important;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.event-source span {
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.v3-explore-first .section-head p:not(.eyebrow) {
+  max-width: 760px;
+}
+
+@media (max-width: 760px) {
+  .v3-hero {
+    padding-top: 42px;
+  }
+
+  .prototype-disclosure {
+    border-radius: 12px;
+    line-height: 1.35;
+  }
+
+  .v3-hero-side {
+    margin-top: 8px;
+  }
+
+  .how-card {
+    padding: 18px;
+  }
+
+  .hero-progress-meta {
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-progress-meta > span {
+    max-width: none;
+  }
+
+  .v3-explore-first {
+    padding-top: 44px;
+  }
+}
